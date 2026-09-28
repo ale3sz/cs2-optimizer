@@ -37,6 +37,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <!-- Tom Select (Buscador en Dropdowns) -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    
     <style>
         body { 
             background-image: linear-gradient(rgba(10, 15, 25, 0.8), rgba(10, 15, 25, 0.9)), url('assets/bg.jpg');
@@ -68,6 +72,33 @@
         ::-webkit-scrollbar-track { background: #11141a; }
         ::-webkit-scrollbar-thumb { background: #f39c12; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #d68910; }
+
+        /* TomSelect Dark Theme Overrides */
+        .ts-control {
+            background-color: rgba(31, 41, 55, 0.8) !important;
+            border: 1px solid #4b5563 !important;
+            color: white !important;
+            border-radius: 0.5rem !important;
+            padding: 0.75rem 1rem !important;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+        }
+        .ts-control > input { color: white !important; }
+        .ts-dropdown {
+            background-color: #1f2937 !important;
+            border: 1px solid #4b5563 !important;
+            color: white !important;
+            border-radius: 0.5rem !important;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+        }
+        .ts-dropdown .option {
+            padding: 0.5rem 1rem !important;
+        }
+        .ts-dropdown .option.active, .ts-dropdown .option:hover {
+            background-color: #f39c12 !important;
+            color: white !important;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -96,20 +127,14 @@
                     <!-- Gráfica -->
                     <div>
                         <label class="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wide"><i class="fa-solid fa-microchip text-csgo-orange mr-2"></i>Tarjeta Gráfica (GPU)</label>
-                        <select id="gpuTier" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-csgo-orange focus:ring-1 focus:ring-csgo-orange transition">
-                            <option value="low">Gama de Entrada (Ej: RX 550, GTX 1050, Integradas)</option>
-                            <option value="mid" selected>Gama Media (Ej: RTX 3060, RX 6600)</option>
-                            <option value="high">Gama Alta (Ej: RTX 4070, RX 7800 XT o superior)</option>
+                        <select id="gpuTier" placeholder="Escribe para buscar tu gráfica..." autocomplete="off">
                         </select>
                     </div>
 
                     <!-- Procesador -->
                     <div>
                         <label class="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wide"><i class="fa-solid fa-memory text-csgo-orange mr-2"></i>Procesador (CPU)</label>
-                        <select id="cpuTier" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-csgo-orange focus:ring-1 focus:ring-csgo-orange transition">
-                            <option value="low">Antiguo / 4 Núcleos (Ej: Ryzen 3000G, i3 viejo)</option>
-                            <option value="mid" selected>Moderno / 6 Núcleos (Ej: Ryzen 5600, Core i5)</option>
-                            <option value="high">Entusiasta (Ej: Ryzen 7800X3D, Core i9)</option>
+                        <select id="cpuTier" placeholder="Escribe para buscar tu procesador..." autocomplete="off">
                         </select>
                     </div>
                 </div>
