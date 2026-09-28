@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Auto-Optimizer | Maximiza tus FPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        csgo: {
+                            orange: '#e58e26',
+                            blue: '#0a3d62',
+                            dark: '#1e272e',
+                            panel: '#2f3640'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #1e272e; color: #f1f2f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-csgo-panel border-b border-csgo-orange p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white"><i class="fa-solid fa-crosshairs text-csgo-orange mr-2"></i>CS2 Auto-Optimizer</h1>
+            <div class="text-sm text-gray-400">Generador de Configuración Pro</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-csgo-panel p-8 rounded-lg shadow-2xl border border-gray-700">
+            <h2 class="text-3xl font-bold mb-6 text-center text-csgo-orange">Optimiza tu PC en 1 clic</h2>
+            <p class="text-gray-300 text-center mb-8">Selecciona tus componentes y generaremos los archivos de configuración perfectos para eliminar el lag y maximizar tus FPS.</p>
+
+            <form id="optimizerForm" class="space-y-6">
+                <!-- Gráfica -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Tu Tarjeta Gráfica (GPU)</label>
+                    <select id="gpuTier" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
+                        <option value="low">Gama de Entrada (Ej: RX 550, GTX 1050, Gráficos Integrados)</option>
+                        <option value="mid" selected>Gama Media (Ej: RTX 3060, RX 6600, GTX 1660)</option>
+                        <option value="high">Gama Alta (Ej: RTX 4070, RX 7800 XT o superior)</option>
+                    </select>
+                </div>
+
+                <!-- Procesador -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Tu Procesador (CPU)</label>
+                    <select id="cpuTier" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
+                        <option value="low">Antiguo / 4 Núcleos (Ej: Ryzen 3000G, i3 viejo)</option>
+                        <option value="mid" selected>Moderno / 6 Núcleos (Ej: Ryzen 5600, Core i5)</option>
+                        <option value="high">Entusiasta (Ej: Ryzen 7800X3D, Core i9)</option>
+                    </select>
+                </div>
+
+                <!-- Resolución preferida -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Resolución Preferida</label>
+                    <select id="resolution" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
+                        <option value="native">Nativa (1080p / 1440p) - Mejor Calidad</option>
+                        <option value="stretched">4:3 Estirado (Ej: 1280x960) - Competitivo / Más FPS</option>
+                    </select>
+                </div>
+
+                <!-- Botón Generar -->
+                <div class="pt-4">
+                    <button type="button" id="generateBtn" class="w-full bg-csgo-orange hover:bg-orange-500 text-white font-bold py-4 rounded-md transition duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fa-solid fa-download mr-2"></i> Generar y Descargar Configuración
+                    </button>
+                </div>
+            </form>
+
+            <!-- Espacio para Afiliados / Publicidad (Automático) -->
+            <div id="upgradeSuggestion" class="mt-8 hidden p-4 bg-gray-800 border-l-4 border-red-500 rounded-r-md">
+                <h3 class="text-red-400 font-bold mb-2"><i class="fa-solid fa-triangle-exclamation"></i> Cuello de Botella Detectado</h3>
+                <p id="upgradeText" class="text-sm text-gray-300"></p>
+                <!-- Aquí irá el link de afiliado -->
+                <a href="#" id="affiliateLink" target="_blank" class="inline-block mt-3 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded">Ver Mejor Oferta de Actualización</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-csgo-panel border-t border-gray-800 py-6 mt-auto">
+        <div class="container mx-auto text-center text-gray-500 text-sm">
+            <p>&copy; 2026 CS2 Auto-Optimizer. Creado para la comunidad.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
