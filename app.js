@@ -11,12 +11,11 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     if (gpuTier === 'low') {
         upgradeDiv.classList.remove('hidden');
         upgradeText.innerHTML = "Tu tarjeta gráfica actual está limitando severamente tus FPS en CS2. La mejor mejora calidad-precio hoy es la <strong>AMD Radeon RX 7600</strong> o <strong>RTX 4060</strong>.";
-        // Aquí pones tu link de afiliado real (Amazon, MercadoLibre, etc.)
-        affiliateLink.href = "https://tu-link-de-afiliado.com/rx7600";
+        affiliateLink.href = "https://meli.la/1XMNxki";
     } else if (cpuTier === 'low') {
         upgradeDiv.classList.remove('hidden');
         upgradeText.innerHTML = "Tu procesador está creando un cuello de botella. Para CS2, necesitas un CPU potente. Recomendamos actualizar al <strong>Ryzen 5 5600</strong> o superior.";
-        affiliateLink.href = "https://tu-link-de-afiliado.com/ryzen5600";
+        affiliateLink.href = "https://meli.la/2xwhaQ2";
     } else {
         upgradeDiv.classList.add('hidden');
     }
