@@ -124,8 +124,8 @@ document.getElementById('generateBtn').addEventListener('click', () => {
 
     // Animación de Carga
     Swal.fire({
-        title: 'Analizando Hardware',
-        html: `Optimizando motor Source 2 para:<br><span class="text-csgo-orange font-bold">${selectedCpuName}</span> + <span class="text-csgo-orange font-bold">${selectedGpuName}</span><br><br><div class="w-full bg-gray-700 h-2 rounded"><div class="bg-csgo-orange h-2 rounded w-0" id="swalProgress"></div></div>`,
+        title: 'IA Analizando Hardware...',
+        html: `Optimizando motor Source 2 para:<br><span class="text-csgo-orange font-bold text-sm">${selectedCpuName}</span><br>+<br><span class="text-csgo-orange font-bold text-sm">${selectedGpuName}</span><br><br><div class="w-full bg-gray-700 h-2 rounded"><div class="bg-csgo-orange h-2 rounded w-0" id="swalProgress"></div></div>`,
         background: '#141923',
         color: '#f1f2f6',
         allowOutsideClick: false,
@@ -139,7 +139,7 @@ document.getElementById('generateBtn').addEventListener('click', () => {
                     progress = 100;
                     clearInterval(interval);
                     bar.style.width = '100%';
-                    setTimeout(() => generateAndDownload(gpuTier, cpuTier, resolution), 800);
+                    setTimeout(() => generateAndDownload(gpuTier, cpuTier, resolution, selectedGpuName, selectedCpuName), 800);
                 } else {
                     bar.style.width = progress + '%';
                 }
@@ -148,58 +148,92 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     });
 });
 
-function generateAndDownload(gpuTier, cpuTier, resolution) {
+function generateAndDownload(gpuTier, cpuTier, resolution, gpuName, cpuName) {
+    // Analizar Hardware Específico ("IA")
+    const isNvidia = gpuName.includes("NVIDIA");
+    const isX3D = cpuName.includes("X3D");
+    const isOldCpu = cpuTier === 'low';
+
     // Generar cs2_video.txt
     let videoConfig = `"video.cfg"\n{\n\t"Version"\t\t"16"\n`;
     videoConfig += `\t"setting.fullscreen"\t\t"1"\n\t"setting.nowindowborder"\t\t"0"\n`;
     
+    // Resolución
     if (resolution === 'stretched') {
         videoConfig += `\t"setting.defaultres"\t\t"1280"\n\t"setting.defaultresheight"\t\t"960"\n\t"setting.aspectratiomode"\t\t"0"\n`;
     } else {
         videoConfig += `\t"setting.defaultres"\t\t"1920"\n\t"setting.defaultresheight"\t\t"1080"\n\t"setting.aspectratiomode"\t\t"1"\n`;
     }
 
+    // NVIDIA Reflex Logic
+    if (isNvidia) {
+        if (cpuTier === 'low') {
+            videoConfig += `\t"setting.r_low_latency"\t\t"1"\n`; // Enabled (mejor si hay cuello de botella CPU)
+        } else {
+            videoConfig += `\t"setting.r_low_latency"\t\t"2"\n`; // Enabled + Boost
+        }
+    } else {
+        videoConfig += `\t"setting.r_low_latency"\t\t"0"\n`; // AMD/Intel no usan Reflex nativo en CS2 de esta forma
+    }
+
+    // Gráficos Detallados según Tier
     if (gpuTier === 'low') {
         videoConfig += `\t"setting.videocfg_hdr_detail"\t\t"0"\n`; 
-        videoConfig += `\t"setting.videocfg_fsr_detail"\t\t"2"\n`; 
-        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"0"\n`;
+        videoConfig += `\t"setting.videocfg_fsr_detail"\t\t"1"\n`; // Calidad (FSR activado)
+        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"0"\n`; // Sombras en bajo (sacrifica ventaja por FPS)
         videoConfig += `\t"setting.videocfg_texture_detail"\t\t"0"\n`;
-        videoConfig += `\t"setting.videocfg_particle_detail"\t\t"0"\n`;
-        videoConfig += `\t"setting.videocfg_ao_detail"\t\t"0"\n`;
+        videoConfig += `\t"setting.mat_antialias"\t\t"0"\n`; // Sin MSAA
     } else if (gpuTier === 'mid') {
-        videoConfig += `\t"setting.videocfg_hdr_detail"\t\t"0"\n`; 
-        videoConfig += `\t"setting.videocfg_fsr_detail"\t\t"0"\n`;
-        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"2"\n`;
+        videoConfig += `\t"setting.videocfg_hdr_detail"\t\t"1"\n`; 
+        videoConfig += `\t"setting.videocfg_fsr_detail"\t\t"0"\n`; // FSR Apagado (Nativo)
+        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"2"\n`; // Sombras en Medio/Alto (Crucial para ver enemigos)
         videoConfig += `\t"setting.videocfg_texture_detail"\t\t"1"\n`;
-        videoConfig += `\t"setting.videocfg_particle_detail"\t\t"0"\n`;
-        videoConfig += `\t"setting.videocfg_ao_detail"\t\t"1"\n`;
+        videoConfig += `\t"setting.mat_antialias"\t\t"2"\n`; // 2x MSAA
     } else {
         videoConfig += `\t"setting.videocfg_hdr_detail"\t\t"3"\n`; 
         videoConfig += `\t"setting.videocfg_fsr_detail"\t\t"0"\n`;
-        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"3"\n`;
+        videoConfig += `\t"setting.videocfg_shadow_quality"\t\t"3"\n`; // Sombras Globales al máximo
         videoConfig += `\t"setting.videocfg_texture_detail"\t\t"2"\n`;
-        videoConfig += `\t"setting.videocfg_particle_detail"\t\t"2"\n`;
-        videoConfig += `\t"setting.videocfg_ao_detail"\t\t"2"\n`;
+        videoConfig += `\t"setting.mat_antialias"\t\t"4"\n`; // 4x MSAA o superior
     }
-    videoConfig += `\t"setting.r_low_latency"\t\t"1"\n}\n`;
+    videoConfig += `}\n`;
 
     // Generar autoexec.cfg
-    let autoexecConfig = `// CS2 Auto-Optimizer Pro Config\n// Generado en cs2optimizer.com\n\n`;
-    autoexecConfig += `fps_max 0\n`;
-    autoexecConfig += `rate 786432\n`;
-    autoexecConfig += `cq_netgraph 1\n`;
-    autoexecConfig += `cl_updaterate 128\n`;
-    autoexecConfig += `cl_interp_ratio 1\n`;
-    autoexecConfig += `cl_interp 0.015625\n`;
+    let autoexecConfig = `// ===========================================\n`;
+    autoexecConfig += `// CS2 Auto-Optimizer Pro Config\n`;
+    autoexecConfig += `// Generado para: ${cpuName} + ${gpuName}\n`;
+    autoexecConfig += `// ===========================================\n\n`;
+
+    autoexecConfig += `// Red y Servidor\n`;
+    autoexecConfig += `rate 786432 // Máximo ancho de banda\n`;
+    autoexecConfig += `cl_updaterate 128 // Forzar sub-tick óptimo\n\n`;
     
-    if (cpuTier === 'low') {
+    autoexecConfig += `// Telemetría Integrada (CS2 Netgraph)\n`;
+    autoexecConfig += `cl_hud_telemetry_frametime_show 2 // Siempre mostrar FPS\n`;
+    autoexecConfig += `cl_hud_telemetry_ping_show 2 // Siempre mostrar Ping\n`;
+    autoexecConfig += `cl_hud_telemetry_net_misdelivery_show 2 // Siempre mostrar Packet Loss\n\n`;
+
+    autoexecConfig += `// Optimización de Sonido\n`;
+    autoexecConfig += `snd_mixahead 0.02 // Menor latencia de audio (Estándar es 0.025)\n\n`;
+
+    autoexecConfig += `// Rendimiento CPU\n`;
+    autoexecConfig += `fps_max 0 // Sin límite de FPS\n`;
+    
+    if (isX3D) {
+        autoexecConfig += `// [!] Procesador Ryzen X3D detectado. Cache V-Cache activo. No se requieren tweaks de hilos adicionales.\n`;
+        autoexecConfig += `engine_low_latency_sleep_after_client_tick false\n`;
+    } else if (isOldCpu) {
+        autoexecConfig += `// [!] Procesador antiguo detectado. Activando sleep para estabilizar frametimes.\n`;
         autoexecConfig += `engine_low_latency_sleep_after_client_tick true\n`;
+    } else {
+        autoexecConfig += `engine_low_latency_sleep_after_client_tick false\n`;
     }
 
     autoexecConfig += `\nhost_writeconfig\n`;
-    autoexecConfig += `echo "==============================="\n`;
-    autoexecConfig += `echo "CS2 Auto-Optimizer Config CARGADA"\n`;
-    autoexecConfig += `echo "==============================="\n`;
+    autoexecConfig += `echo "========================================"\n`;
+    autoexecConfig += `echo "CS2 Auto-Optimizer Config CARGADA EXACTA"\n`;
+    autoexecConfig += `echo "Optimizada para: ${gpuName}"\n`;
+    autoexecConfig += `echo "========================================"\n`;
 
     downloadFile('cs2_video.txt', videoConfig);
     setTimeout(() => {
@@ -222,8 +256,8 @@ function generateAndDownload(gpuTier, cpuTier, resolution) {
                 
                 <!-- Demostración de Transparencia -->
                 <div class="text-left bg-gray-900 border border-gray-700 p-3 rounded mb-4 overflow-hidden">
-                    <span class="text-xs text-gray-400 font-bold uppercase mb-1 block">Vista Previa (100% Código Seguro):</span>
-                    <pre class="text-xs text-green-400 font-mono overflow-hidden">fps_max 0\nrate 786432\ncl_updaterate 128...</pre>
+                    <span class="text-xs text-gray-400 font-bold uppercase mb-1 block">Vista Previa (Código Personalizado):</span>
+                    <pre class="text-xs text-green-400 font-mono overflow-y-auto max-h-24 p-2 bg-black rounded">// Generado para: ${cpuName}\nrate 786432\nsnd_mixahead 0.02\nhost_writeconfig...</pre>
                 </div>
 
                 <p class="text-sm text-left mb-2"><strong>1.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">cs2_video.txt</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/userdata/[tu_id]/730/local/cfg</span></p>
