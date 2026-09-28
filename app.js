@@ -260,6 +260,14 @@ function generateAndDownload(gpuTier, cpuTier, resolution, gpuName, cpuName) {
                     <pre class="text-xs text-green-400 font-mono overflow-y-auto max-h-24 p-2 bg-black rounded">// Generado para: ${cpuName}\nrate 786432\nsnd_mixahead 0.02\nhost_writeconfig...</pre>
                 </div>
 
+                <!-- Launch Options Sugeridas -->
+                <div class="text-left bg-gray-900 border border-gray-700 p-3 rounded mb-4">
+                    <span class="text-xs text-csgo-orange font-bold uppercase mb-1 block">3. Opciones de Lanzamiento (Steam):</span>
+                    <div class="flex items-center">
+                        <code class="text-xs text-white bg-black px-2 py-1 rounded w-full border border-gray-600">-novid -nojoy +exec autoexec.cfg</code>
+                    </div>
+                </div>
+
                 <p class="text-sm text-left mb-2"><strong>1.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">cs2_video.txt</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/userdata/[tu_id]/730/local/cfg</span></p>
                 <p class="text-sm text-left mb-2"><strong>2.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">autoexec.cfg</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg</span></p>
             `,
@@ -279,4 +287,48 @@ function downloadFile(filename, text) {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+}
+
+// Lógica de eDPI
+document.getElementById('calcEdpiBtn').addEventListener('click', () => {
+    const dpi = parseFloat(document.getElementById('mouseDpi').value);
+    const sens = parseFloat(document.getElementById('mouseSens').value);
+    const resultBox = document.getElementById('edpiResultBox');
+    const valueSpan = document.getElementById('edpiValue');
+    const verdict = document.getElementById('edpiVerdict');
+
+    if (!dpi || !sens) {
+        Swal.fire({ icon: 'warning', title: 'Faltan datos', text: 'Ingresa tu DPI y Sensibilidad.', background: '#141923', color: '#f1f2f6' });
+        return;
+    }
+
+    const edpi = dpi * sens;
+    resultBox.classList.remove('hidden');
+    valueSpan.innerText = Math.round(edpi);
+
+    if (edpi < 600) {
+        verdict.innerText = "Sensibilidad Baja (Ideal para Riflers. Ej: NiKo).";
+        verdict.className = "text-xs font-bold mt-2 text-blue-400";
+    } else if (edpi >= 600 && edpi <= 1000) {
+        verdict.innerText = "Sensibilidad Media (Promedio de los Pros. Balance perfecto).";
+        verdict.className = "text-xs font-bold mt-2 text-green-400";
+    } else {
+        verdict.innerText = "Sensibilidad Alta (Ideal para AWPers. Ej: s1mple).";
+        verdict.className = "text-xs font-bold mt-2 text-red-400";
+    }
+});
+
+// Función para copiar mira
+function copyCrosshair(code) {
+    navigator.clipboard.writeText(code).then(() => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Código Copiado',
+            text: `Importa este código en los ajustes de CS2: ${code}`,
+            background: '#141923',
+            color: '#f1f2f6',
+            confirmButtonColor: '#f39c12',
+            timer: 3000
+        });
+    });
 }
