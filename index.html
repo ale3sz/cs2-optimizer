@@ -3,116 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 Auto-Optimizer | Maximiza tus FPS</title>
+    <title>CS2 Auto-Optimizer | Maximum Performance</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
                     colors: {
                         csgo: {
-                            orange: '#e58e26',
-                            blue: '#0a3d62',
-                            dark: '#1e272e',
-                            panel: '#2f3640'
+                            orange: '#f39c12',
+                            blue: '#0984e3',
+                            dark: '#11141a',
+                            panel: 'rgba(20, 25, 35, 0.75)'
                         }
                     }
                 }
             }
         }
     </script>
+    
+    <!-- FontAwesome & SweetAlert2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
-        body { background-color: #1e272e; color: #f1f2f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background-image: linear-gradient(rgba(10, 15, 25, 0.8), rgba(10, 15, 25, 0.9)), url('assets/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f1f2f6; 
+            font-family: 'Rajdhani', sans-serif; 
+        }
+        
+        .glass-panel {
+            background: rgba(20, 25, 35, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.6);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #11141a; }
+        ::-webkit-scrollbar-thumb { background: #f39c12; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d68910; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Navbar -->
-    <nav class="bg-csgo-panel border-b border-csgo-orange p-4 shadow-lg">
+    <nav class="glass-panel border-b border-csgo-orange p-4 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-white"><i class="fa-solid fa-crosshairs text-csgo-orange mr-2"></i>CS2 Auto-Optimizer</h1>
-            <div class="text-sm text-gray-400">Generador de Configuración Pro</div>
+            <div class="flex items-center space-x-3">
+                <img src="assets/logo.jpg" alt="Logo" class="w-10 h-10 rounded-full border-2 border-csgo-orange shadow-[0_0_10px_rgba(243,156,18,0.5)]">
+                <h1 class="text-3xl font-bold text-white tracking-wider neon-glow">CS2 Auto-Optimizer</h1>
+            </div>
+            <div class="text-sm text-gray-300 font-semibold uppercase tracking-widest hidden md:block">Next-Gen Config Generator</div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8">
-        <div class="max-w-3xl mx-auto bg-csgo-panel p-8 rounded-lg shadow-2xl border border-gray-700">
-            <h2 class="text-3xl font-bold mb-6 text-center text-csgo-orange">Optimiza tu PC en 1 clic</h2>
-            <p class="text-gray-300 text-center mb-8">Selecciona tus componentes y generaremos los archivos de configuración perfectos para eliminar el lag y maximizar tus FPS.</p>
+    <main class="flex-grow container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto glass-panel p-8 md:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
+            <!-- Decorative Accent -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-csgo-orange to-transparent opacity-50"></div>
+            
+            <h2 class="text-4xl font-bold mb-4 text-center text-white tracking-wide">Desata el máximo <span class="text-csgo-orange">Rendimiento</span></h2>
+            <p class="text-gray-300 text-center mb-10 text-lg">Selecciona tu hardware y nuestro algoritmo generará los archivos <span class="text-csgo-orange font-mono">autoexec.cfg</span> y <span class="text-csgo-orange font-mono">cs2_video.txt</span> perfectos para eliminar el input lag.</p>
 
             <form id="optimizerForm" class="space-y-6">
-                <!-- Gráfica -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Tu Tarjeta Gráfica (GPU)</label>
-                    <select id="gpuTier" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
-                        <option value="low">Gama de Entrada (Ej: RX 550, GTX 1050, Gráficos Integrados)</option>
-                        <option value="mid" selected>Gama Media (Ej: RTX 3060, RX 6600, GTX 1660)</option>
-                        <option value="high">Gama Alta (Ej: RTX 4070, RX 7800 XT o superior)</option>
-                    </select>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Gráfica -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wide"><i class="fa-solid fa-microchip text-csgo-orange mr-2"></i>Tarjeta Gráfica (GPU)</label>
+                        <select id="gpuTier" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-csgo-orange focus:ring-1 focus:ring-csgo-orange transition">
+                            <option value="low">Gama de Entrada (Ej: RX 550, GTX 1050, Integradas)</option>
+                            <option value="mid" selected>Gama Media (Ej: RTX 3060, RX 6600)</option>
+                            <option value="high">Gama Alta (Ej: RTX 4070, RX 7800 XT o superior)</option>
+                        </select>
+                    </div>
 
-                <!-- Procesador -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Tu Procesador (CPU)</label>
-                    <select id="cpuTier" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
-                        <option value="low">Antiguo / 4 Núcleos (Ej: Ryzen 3000G, i3 viejo)</option>
-                        <option value="mid" selected>Moderno / 6 Núcleos (Ej: Ryzen 5600, Core i5)</option>
-                        <option value="high">Entusiasta (Ej: Ryzen 7800X3D, Core i9)</option>
-                    </select>
+                    <!-- Procesador -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wide"><i class="fa-solid fa-memory text-csgo-orange mr-2"></i>Procesador (CPU)</label>
+                        <select id="cpuTier" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-csgo-orange focus:ring-1 focus:ring-csgo-orange transition">
+                            <option value="low">Antiguo / 4 Núcleos (Ej: Ryzen 3000G, i3 viejo)</option>
+                            <option value="mid" selected>Moderno / 6 Núcleos (Ej: Ryzen 5600, Core i5)</option>
+                            <option value="high">Entusiasta (Ej: Ryzen 7800X3D, Core i9)</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Resolución preferida -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Resolución Preferida</label>
-                    <select id="resolution" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:border-csgo-orange">
-                        <option value="native">Nativa (1080p / 1440p) - Mejor Calidad</option>
-                        <option value="stretched">4:3 Estirado (Ej: 1280x960) - Competitivo / Más FPS</option>
+                <div class="pt-2">
+                    <label class="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wide"><i class="fa-solid fa-display text-csgo-orange mr-2"></i>Resolución Preferida</label>
+                    <select id="resolution" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-csgo-orange focus:ring-1 focus:ring-csgo-orange transition">
+                        <option value="native">Nativa (1080p / 1440p) - Mejor Calidad Visual</option>
+                        <option value="stretched">4:3 Estirado (Ej: 1280x960) - Competitivo / Hitboxes anchos</option>
                     </select>
                 </div>
 
                 <!-- Botón Generar -->
-                <div class="pt-4">
-                    <button type="button" id="generateBtn" class="w-full bg-csgo-orange hover:bg-orange-500 text-white font-bold py-4 rounded-md transition duration-300 transform hover:scale-105 shadow-lg">
-                        <i class="fa-solid fa-download mr-2"></i> Generar y Descargar Configuración
+                <div class="pt-8">
+                    <button type="button" id="generateBtn" class="w-full bg-gradient-to-r from-orange-600 to-csgo-orange hover:from-orange-500 hover:to-orange-400 text-white text-xl font-bold py-5 rounded-lg transition duration-300 transform hover:-translate-y-1 btn-glow flex justify-center items-center">
+                        <i class="fa-solid fa-bolt mr-3"></i> GENERAR ARCHIVOS DE OPTIMIZACIÓN
                     </button>
                 </div>
             </form>
 
-            <!-- Espacio para Afiliados / Publicidad (Automático) -->
-            <div id="upgradeSuggestion" class="mt-8 hidden p-4 bg-gray-800 border-l-4 border-red-500 rounded-r-md">
-                <h3 class="text-red-400 font-bold mb-2"><i class="fa-solid fa-triangle-exclamation"></i> Cuello de Botella Detectado</h3>
-                <p id="upgradeText" class="text-sm text-gray-300"></p>
-                <!-- Aquí irá el link de afiliado -->
-                <a href="#" id="affiliateLink" target="_blank" class="inline-block mt-3 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded">Ver Mejor Oferta de Actualización</a>
+            <!-- Alerta Cuello de Botella -->
+            <div id="upgradeSuggestion" class="mt-8 hidden p-5 bg-red-900/40 border-l-4 border-red-500 rounded-r-lg backdrop-blur-sm">
+                <h3 class="text-red-400 font-bold mb-2 text-lg uppercase tracking-wide"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Cuello de Botella Crítico Detectado</h3>
+                <p id="upgradeText" class="text-md text-gray-200 mb-3"></p>
+                <a href="#" id="affiliateLink" target="_blank" class="inline-block px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-bold rounded shadow-lg transition transform hover:scale-105"><i class="fa-solid fa-arrow-up-right-dots mr-2"></i>Ver Mejor Oferta de Actualización</a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE PUBLICIDAD Y GEAR RECOMENDADO -->
+        <div class="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Ad: Skins -->
+            <div class="glass-panel p-6 rounded-xl text-center border border-gray-600 hover:border-csgo-orange transition duration-300 group">
+                <span class="text-xs text-csgo-orange font-bold uppercase tracking-widest block mb-2">Patrocinador Oficial</span>
+                <img src="https://prosettings.net/wp-content/uploads/keydrop.png" alt="Keydrop" class="h-12 mx-auto mb-4 opacity-80 group-hover:opacity-100 transition">
+                <a href="https://kd.link/?code=CS2FPS" target="_blank" class="block text-xl font-bold text-white group-hover:text-csgo-orange transition">
+                    Abre las mejores Cajas de CS2
+                </a>
+                <p class="text-sm text-gray-400 mt-2">Bono gratis incluido usando el código <span class="bg-gray-800 px-2 py-1 rounded text-csgo-orange font-mono">CS2FPS</span></p>
+                <a href="https://kd.link/?code=CS2FPS" target="_blank" class="mt-4 inline-block px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-sm text-white font-bold transition">Reclamar Bono</a>
             </div>
 
-            <!-- NUEVO: Sección de Publicidad y Periféricos -->
-            <div class="mt-8 pt-8 border-t border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Ad 1: Skins -->
-                <div class="bg-gray-800 p-4 rounded text-center border border-dashed border-gray-600 hover:border-csgo-orange transition">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Patrocinador Oficial</span>
-                    <a href="https://kd.link/?code=CS2FPS" id="skinBanner" target="_blank" class="block mt-3 text-lg font-bold text-csgo-orange hover:text-white transition">
-                        🔥 Abre las mejores Cajas de CS2 en KeyDrop 🔥
-                    </a>
-                    <p class="text-xs text-gray-400 mt-2">Bono gratis incluido con el código <strong>CS2FPS</strong></p>
-                </div>
-
-                <!-- Ad 2: Hardware Fijo (Monitor/Mouse) -->
-                <div class="bg-gray-800 p-4 rounded text-center border border-gray-600">
-                    <h4 class="text-sm font-bold text-white mb-2"><i class="fa-solid fa-desktop text-blue-400"></i> Ventaja Competitiva</h4>
-                    <p class="text-xs text-gray-400 mb-3">En CS2, jugar a 60Hz es una desventaja enorme. Necesitas un monitor de 144Hz o 240Hz para ver a los enemigos antes.</p>
-                    <a href="https://meli.la/1eAb8re" id="monitorLink" target="_blank" class="inline-block px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded transition">Ver Monitores 144Hz en Oferta</a>
-                </div>
+            <!-- Ad: Hardware Recomendado -->
+            <div class="glass-panel p-6 rounded-xl text-left border border-gray-600">
+                <h4 class="text-lg font-bold text-white mb-4 uppercase tracking-wide border-b border-gray-700 pb-2"><i class="fa-solid fa-crosshairs text-csgo-orange mr-2"></i> Gear Competitivo Recomendado</h4>
+                <ul class="space-y-4">
+                    <!-- Monitor -->
+                    <li class="flex justify-between items-center group">
+                        <div>
+                            <p class="text-sm font-bold text-gray-200 group-hover:text-csgo-orange transition">Monitor 144Hz+</p>
+                            <p class="text-xs text-gray-400">Esencial para ver enemigos a tiempo.</p>
+                        </div>
+                        <a href="https://meli.la/1eAb8re" target="_blank" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded text-xs font-bold text-white transition">Ver Oferta</a>
+                    </li>
+                    <!-- Mouse -->
+                    <li class="flex justify-between items-center group">
+                        <div>
+                            <p class="text-sm font-bold text-gray-200 group-hover:text-csgo-orange transition">Mouse Competitivo Ultraligero</p>
+                            <p class="text-xs text-gray-400">Aim perfecto sin tirones.</p>
+                        </div>
+                        <a href="#" id="linkMouse" target="_blank" class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 border border-gray-500 rounded text-xs font-bold text-white transition">Ver Oferta</a>
+                    </li>
+                    <!-- Headset -->
+                    <li class="flex justify-between items-center group">
+                        <div>
+                            <p class="text-sm font-bold text-gray-200 group-hover:text-csgo-orange transition">Auriculares HyperX Cloud</p>
+                            <p class="text-xs text-gray-400">Escucha los pasos con precisión.</p>
+                        </div>
+                        <a href="#" id="linkHeadset" target="_blank" class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 border border-gray-500 rounded text-xs font-bold text-white transition">Ver Oferta</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-csgo-panel border-t border-gray-800 py-6 mt-auto">
-        <div class="container mx-auto text-center text-gray-500 text-sm">
-            <p>&copy; 2026 CS2 Auto-Optimizer. Creado para la comunidad.</p>
+    <footer class="glass-panel border-t border-gray-800 py-8 mt-auto">
+        <div class="container mx-auto text-center text-gray-400 text-sm">
+            <p class="mb-2">&copy; 2026 CS2 Auto-Optimizer. Construido para dominar el servidor.</p>
+            <p class="text-xs opacity-50">Este sitio utiliza enlaces de afiliados. Las compras realizadas a través de ellos ayudan a mantener la herramienta gratuita.</p>
         </div>
     </footer>
 
