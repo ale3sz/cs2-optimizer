@@ -161,6 +161,10 @@
                     <button type="button" id="generateBtn" class="w-full bg-gradient-to-r from-orange-600 to-csgo-orange hover:from-orange-500 hover:to-orange-400 text-white text-xl font-bold py-5 rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-[0_0_25px_rgba(243,156,18,0.3)] hover:shadow-[0_0_35px_rgba(243,156,18,0.6)] flex justify-center items-center group">
                         <i class="fa-solid fa-unlock-keyhole mr-3 group-hover:scale-125 transition"></i> DESBLOQUEAR MÁXIMOS FPS
                     </button>
+                    <!-- Transparencia para evitar sospechas -->
+                    <p class="text-xs text-gray-400 mt-4 text-center leading-relaxed">
+                        <i class="fa-solid fa-circle-info text-blue-400 mr-1"></i> <strong>¿Por qué descargar un archivo?</strong> Counter-Strike guarda tu configuración en archivos de texto plano. Al hacer clic, solo descargarás un <span class="text-gray-300 font-mono">Bloc de Notas</span> con comandos oficiales de Valve. <strong>Cero virus. Cero ejecutables.</strong> Puedes abrirlos antes de usarlos para comprobarlo.
+                    </p>
                 </div>
 
                 <!-- Trust Badges (Señales de Seguridad) -->
@@ -175,7 +179,7 @@
                     </div>
                     <div class="text-center flex flex-col items-center">
                         <i class="fa-solid fa-file-code text-2xl text-purple-500 mb-1"></i>
-                        <span class="text-xs font-bold text-gray-400 uppercase">Sin Instalación</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">Solo Texto Plano</span>
                     </div>
                 </div>
             </form>
@@ -185,6 +189,30 @@
                 <h3 class="text-red-400 font-bold mb-2 text-lg uppercase tracking-wide"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Cuello de Botella Crítico Detectado</h3>
                 <p id="upgradeText" class="text-md text-gray-200 mb-3"></p>
                 <a href="#" id="affiliateLink" target="_blank" class="inline-block px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-bold rounded shadow-lg transition transform hover:scale-105"><i class="fa-solid fa-arrow-up-right-dots mr-2"></i>Ver Mejor Oferta de Actualización</a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE OPTIMIZACIÓN DE TORNEOS (NUEVO) -->
+        <div class="max-w-4xl mx-auto mt-12 glass-panel p-8 rounded-xl border border-blue-500/30">
+            <h3 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-trophy text-yellow-500 mr-2"></i> Secretos de Torneos Oficiales (LAN)</h3>
+            <p class="text-gray-300 text-sm mb-4">¿Te preguntas cómo hacen ESL o BLAST para que las PCs en los escenarios no tengan ningún tirón (stuttering)? Además de usar nuestros archivos <code class="text-csgo-orange">.cfg</code>, los administradores de torneos usan estas dos herramientas gratuitas en Windows:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-gray-800/80 p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-blue-400 mb-2">1. ISLC (Intelligent Standby List Cleaner)</h4>
+                    <p class="text-xs text-gray-400 mb-3">Limpia la memoria RAM "en espera" de Windows mientras juegas. Elimina por completo los micro-tirones cuando hay explosiones o mucho humo (Source 2 consume mucha RAM cacheada).</p>
+                    <ul class="text-xs text-gray-300 list-disc list-inside">
+                        <li>Fija la resolución del temporizador a <strong>0.50 ms</strong>.</li>
+                        <li>Reduce el input lag del mouse al mínimo físico.</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800/80 p-5 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-orange-400 mb-2">2. Process Lasso</h4>
+                    <p class="text-xs text-gray-400 mb-3">Evita que Windows use los mismos núcleos de tu procesador para CS2 y para tareas de fondo (como Discord o Chrome). Los pros le quitan el "Core 0" al CS2 para evitar interrupciones.</p>
+                    <ul class="text-xs text-gray-300 list-disc list-inside">
+                        <li>Activa el plan <strong>Bitsum Highest Performance</strong>.</li>
+                        <li>Estabiliza los "1% Lows" (caídas bruscas de FPS).</li>
+                    </ul>
+                </div>
             </div>
         </div>
 

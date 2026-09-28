@@ -214,17 +214,25 @@ function generateAndDownload(gpuTier, cpuTier, resolution) {
         Swal.fire({
             icon: 'success',
             title: '¡Desbloqueo Completado!',
+            width: '600px',
             html: `
                 <div class="bg-green-900/30 border border-green-500 rounded p-3 mb-4 text-center">
                     <span class="text-green-400 font-bold text-lg">🚀 Mejora Estimada: +${minFps} a +${maxFps} FPS</span>
                 </div>
+                
+                <!-- Demostración de Transparencia -->
+                <div class="text-left bg-gray-900 border border-gray-700 p-3 rounded mb-4 overflow-hidden">
+                    <span class="text-xs text-gray-400 font-bold uppercase mb-1 block">Vista Previa (100% Código Seguro):</span>
+                    <pre class="text-xs text-green-400 font-mono overflow-hidden">fps_max 0\nrate 786432\ncl_updaterate 128...</pre>
+                </div>
+
                 <p class="text-sm text-left mb-2"><strong>1.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">cs2_video.txt</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/userdata/[tu_id]/730/local/cfg</span></p>
                 <p class="text-sm text-left mb-2"><strong>2.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">autoexec.cfg</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg</span></p>
             `,
             background: '#141923',
             color: '#f1f2f6',
             confirmButtonColor: '#f39c12',
-            confirmButtonText: '¡A Jugar!'
+            confirmButtonText: '¡A Jugar y Subir de Rango!'
         });
     }, 500);
 }
