@@ -269,7 +269,12 @@ function generateAndDownload(gpuTier, cpuTier, resolution, gpuName, cpuName) {
                 </div>
 
                 <p class="text-sm text-left mb-2"><strong>1.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">cs2_video.txt</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/userdata/[tu_id]/730/local/cfg</span></p>
-                <p class="text-sm text-left mb-2"><strong>2.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">autoexec.cfg</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg</span></p>
+                <p class="text-sm text-left mb-4"><strong>2.</strong> Copia <code class="text-csgo-orange bg-gray-800 px-1">autoexec.cfg</code> a:<br><span class="text-xs text-gray-400 break-all">Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg</span></p>
+                
+                <!-- Botón de Viralidad -->
+                <a href="https://twitter.com/intent/tweet?text=Acabo%20de%20desbloquear%20el%20máximo%20rendimiento%20de%20mi%20PC%20en%20CS2%20usando%20CS2%20Auto-Optimizer.%20%C2%A1Pruébalo%20gratis!&url=https://ale3sz.github.io/cs2-optimizer" target="_blank" class="block w-full bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white font-bold py-2 rounded text-sm transition">
+                    <i class="fa-brands fa-twitter mr-2"></i> Compartir mi resultado
+                </a>
             `,
             background: '#141923',
             color: '#f1f2f6',
@@ -288,6 +293,45 @@ function downloadFile(filename, text) {
     element.click();
     document.body.removeChild(element);
 }
+
+// Lógica de Descarga del .REG (Windows Tweak)
+document.getElementById('downloadRegBtn').addEventListener('click', () => {
+    let regContent = `Windows Registry Editor Version 5.00\n\n`;
+    
+    regContent += `; Desactivar GameDVR y GameBar (Evita tirones)\n`;
+    regContent += `[HKEY_CURRENT_USER\\System\\GameConfigStore]\n`;
+    regContent += `"GameDVR_Enabled"=dword:00000000\n`;
+    regContent += `"GameDVR_FSEBehaviorMode"=dword:00000002\n\n`;
+    
+    regContent += `[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR]\n`;
+    regContent += `"AllowGameDVR"=dword:00000000\n\n`;
+    
+    regContent += `; Optimizacion Multimedia y Red (Sin limite de velocidad)\n`;
+    regContent += `[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile]\n`;
+    regContent += `"NetworkThrottlingIndex"=dword:ffffffff\n`;
+    regContent += `"SystemResponsiveness"=dword:00000000\n\n`;
+    
+    regContent += `; Prioridad GPU para Juegos\n`;
+    regContent += `[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games]\n`;
+    regContent += `"Affinity"=dword:00000000\n`;
+    regContent += `"Background Only"="False"\n`;
+    regContent += `"Clock Rate"=dword:00002710\n`;
+    regContent += `"GPU Priority"=dword:00000008\n`;
+    regContent += `"Priority"=dword:00000006\n`;
+    regContent += `"Scheduling Category"="High"\n`;
+    regContent += `"SFIO Priority"="High"\n`;
+
+    downloadFile('cs2_windows_ultimate_tweak.reg', regContent);
+    
+    Swal.fire({
+        icon: 'info',
+        title: 'Registro Descargado',
+        html: '<p class="text-sm text-gray-300">Haz doble clic en el archivo <b>cs2_windows_ultimate_tweak.reg</b> y dale a "Sí" para aplicar los cambios.<br><br><i>Reinicia tu PC para que hagan efecto.</i></p>',
+        background: '#141923',
+        color: '#f1f2f6',
+        confirmButtonColor: '#9333ea'
+    });
+});
 
 // Lógica de eDPI
 document.getElementById('calcEdpiBtn').addEventListener('click', () => {
